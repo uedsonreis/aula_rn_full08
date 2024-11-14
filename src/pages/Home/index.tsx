@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar'
 import * as ExpoLocation from 'expo-location'
 import { Alert, Text, View } from 'react-native'
 import MapView, { LongPressEvent, Marker } from 'react-native-maps'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { placeRepository } from '../../services/place.repository'
 import { Place } from '../../model/place'
@@ -33,7 +33,11 @@ export default function HomePage() {
     }
 
     function goToCreatePlace(event: LongPressEvent) {
-        navigation.navigate('Create', event.nativeEvent.coordinate)
+        navigation.navigate('Place', event.nativeEvent.coordinate)
+    }
+
+    function goToEditPlace(place: Place) {
+        navigation.navigate('Place', place)
     }
 
     React.useEffect(() => {
@@ -43,6 +47,10 @@ export default function HomePage() {
 
         getCurrentLocation()
     }, [])
+
+    useFocusEffect(() => {
+        fetchPlaces()
+    })
 
     if (!location) {
         return (
@@ -71,6 +79,7 @@ export default function HomePage() {
                         key={`${place.latitude}-${place.longitude}`}
                         title={place.name}
                         coordinate={{ latitude: place.latitude, longitude: place.longitude }}
+                        onPress={() => goToEditPlace(place)}
                     />
                 )) }
             </MapView>

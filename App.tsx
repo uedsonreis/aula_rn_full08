@@ -2,12 +2,12 @@ import { createStaticNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomePage from './src/pages/Home'
-import CreatePlacePage from './src/pages/Place/create'
+import PlacePage from './src/pages/Place'
 
 const Stack = createNativeStackNavigator({
     screens: {
         Home: HomePage,
-        Create: CreatePlacePage,
+        Place: PlacePage,
     },
 })
 
